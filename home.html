@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="stylee.css">
+</head>
+<body>
+    <div id="header">
+        <img src="images/img1.jpg" alt="Logo">
+        <div id="span">Shop Stock</div>
+        <div class="navigation">
+        <a href="home.html"> Home</a>
+        <a href="about.html">About</a>
+        <a href="shop.html">Shop</a>
+        <a href="contactus.html"> Contact us</a>
+        <a href="cart.html" ><img src="images/img3.jpg" alt="cart" class="cart"></a>
+        <a href="profile.html" ><img src="images/pic1.jpg" alt="profile-pohto" class="profile-photo"></a>
+        </div>
+    </div>
+    <div id="describe">
+        <h1> Shop Stock</h1>
+        <p>
+        "Shop Stock " is a comprehensive e-commerce platform offering a diverse range of products and services tailored to modern consumers. With a user-friendly interface, secure transactions, and responsive customer support, Shop Stock Online simplifies the shopping experience. From electronics to fashion, home essentials to gadgets, customers can explore a vast array of high-quality items at competitive prices. With seamless navigation and personalized recommendations, users can discover new products tailored to their preferences. Whether browsing for everyday essentials or searching for special gifts, Shop Stock Online ensures a convenient and enjoyable shopping journey, empowering customers to shop confidently from the comfort of their homes.
+        </p>
+        <hr>
+    </div>
+    <h2>Top Selling Products </h2>
+    <div id="top-products" class="product-container">
+    </div>
+    <button id="next-button">SHOW MORE</button>
+    <div id="links">
+        <p> (Contact-us on the SocialMedia) </p>
+        <a href="https://www.facebook.com/" ><img src="images/img4.png" alt="facebook.profile"></a>
+        <a href="https://www.twitter.com/" ><img src="images/img5.png" alt="twitter.profile"></a>
+    </div>
+    <div id="footer">
+        <p>&copy; 2024 Shop Stock. All rights reserved.</p>
+    </div>
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+            const topProductsContainer = document.getElementById('top-products')
+            const nextButton = document.getElementById('next-button')
+            let currentIndex = 0
+            fetch('https://fakestoreapi.com/products')
+                .then(response => response.json())
+                .then(products => {
+                    const topSellingProducts = products.filter(product => product.rating.rate > 3)
+                    displayProducts(topSellingProducts)
+
+                    nextButton.addEventListener('click', () => {
+                        currentIndex += 4
+                        if (currentIndex >= topSellingProducts.length) {
+                            currentIndex = 0
+                        }
+                        displayProducts(topSellingProducts)
+                    })
+                })
+                .catch(error => console.error('Error fetching data:', error))
+
+            function displayProducts(products) {
+                topProductsContainer.innerHTML = ''
+                const endIndex = currentIndex + 4
+                for (let i = currentIndex; i < endIndex && i < products.length; i++) {
+                    const productDiv = createProductDiv(products[i])
+                    topProductsContainer.appendChild(productDiv)
+                }
+            }
+
+            function createProductDiv(product) {
+                const productDiv = document.createElement('div')
+                productDiv.classList.add('product')
+
+                const title = document.createElement('h3')
+                title.textContent = product.title
+
+                const image = document.createElement('img')
+                image.src = product.image
+                image.alt = product.title
+
+                productDiv.appendChild(title)
+                productDiv.appendChild(image)
+
+                return productDiv
+            }
+        })
+
+    </script>
+    
+</body>
+</html>

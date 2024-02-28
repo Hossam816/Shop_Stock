@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact-us Page</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="stylee.css">
+</head>
+<body>
+    <div id="header">
+        <img src="images/img1.jpg" alt="Logo">
+        <div id="span">Shop Stock</div>
+        <div class="navigation">
+        <a href="home.html"> Home</a>
+        <a href="about.html">About</a>
+        <a href="shop.html">Shop</a>
+        <a href="contactus.html"> Contact us</a>
+        <a href="cart.html" ><img src="images/img3.jpg" alt="cart" class="cart"></a>
+        <a href="profile.html" ><img src="images/pic1.jpg" alt="profile-pohto" class="profile-photo"></a>
+        </div>
+    </div>
+    
+    <div id="form">
+        <form id="contact-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your Name">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email">
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" placeholder="Enter your phone">
+            <label for="message">Your Message</label>
+            <textarea id="message" name="message" placeholder="Enter your message"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div id="links">
+        <p> (Contact-us on the SocialMedia) </p>
+        <a href="https://www.facebook.com/" ><img src="images/img4.png" alt="facebook.profile"></a>
+        <a href="https://www.twitter.com/" ><img src="images/img5.png" alt="twitter.profile"></a>
+    </div>
+    <div id="footer">
+        <p>&copy; 2024 Shop Stock. All rights reserved.</p>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        var form = document.getElementById('contact-form')
+        form.addEventListener("submit", function (event) {
+        event.preventDefault()
+        var name = document.getElementById('name').value
+        var email = document.getElementById('email').value
+        var phone = document.getElementById('phone').value
+        var message = document.getElementById('message').value
+        var phonePattern = /^(01)\d{9}$/
+        if (name && email && phone && message && phonePattern.test(phone)) {
+            alert("Thank you for your message. Our customer service will contact you within 24 hours.")
+            form.reset()
+        } else {
+            alert("Please fill in all required fields correctly.")
+        }
+    })
+})
+    </script>
+    
+    
+</body>
+</html>

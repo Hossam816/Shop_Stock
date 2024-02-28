@@ -1,0 +1,237 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+#header {
+    background-color: #f2f2f2;
+     padding: 10px; 
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 20px; 
+}
+
+#span {
+    color: black;
+    height: 50px;
+    line-height: 50px;
+    font-size: 36px; 
+    font-weight: bold;
+    margin-left: 10px; 
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+img {
+    max-width: 100px; 
+    height: auto; 
+    vertical-align: middle; 
+    margin-right: 10px; 
+}
+#login {
+    background-color: #f2f2f2; 
+    width: 400px; 
+    height: 400px;
+    margin: 0 auto; 
+    padding: 20px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    margin-top: 50px; 
+     display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+
+}
+
+#login label[for="Log-in"] {
+    text-align: center;
+}
+
+
+#login label {
+    display: block; 
+    margin-bottom: 5px; 
+    text-align: left;
+}
+
+
+#login input[type="text"],
+#login input[type="password"],
+#login button {
+    width: calc(100% - 20px);
+    padding: 5px; 
+    margin-bottom: 10px; 
+    border: 1px solid #ccc;
+    border-radius: 5px; 
+}
+
+#login a {
+    display: block; 
+    text-align: center;
+    text-decoration: underline; 
+    color:blue; 
+}
+#login a:hover {
+    color: darkblue; 
+}
+
+
+#login button {
+    background-color: #007bff; 
+    color: #fff; 
+    border: none; 
+    cursor: pointer; 
+    padding: 10px;
+}
+
+
+#login button:hover {
+    background-color: #0056b3;
+}
+
+#login label[for="Log-in"] {
+    font-size: 24px; 
+    font-weight: bold; 
+    margin-bottom: 60px; 
+}
+
+#passwordReturnForm {
+    background-color: #f2f2f2;
+    width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#passwordReturnForm p {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#passwordReturnForm label {
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+#passwordReturnForm input[type="email"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#passwordReturnForm button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#passwordReturnForm button:hover {
+    background-color: #0056b3;
+}
+#footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    margin-top: auto;
+
+}
+#create_an_account {
+    background-color: #f2f2f2;
+    width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#create_an_account img {
+    max-width: 100px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 20px;
+}
+
+#create_an_account h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#create_an_account input[type="text"],
+#create_an_account input[type="password"],
+#create_an_account input[type="email"],
+#create_an_account input[type="checkbox"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.gender {
+    display: flex;
+    align-items: center;
+}
+.check {
+    display: inline-block;
+    white-space: nowrap;
+    display: flex;
+    text-align: left;
+}
+.check input[type="checkbox"] {
+    display: inline-block;
+    margin: 0;
+    margin-right: 20px;
+}
+.check label {
+    vertical-align: middle;
+    margin-left: 120px; 
+    padding: 0;
+    margin: 0;
+}
+.gender input[type="radio"],
+.gender label {
+    margin-right: 10px;
+}
+
+
+.error-message {
+    color: red;
+    font-size: 14px;
+}
+#create_an_account button[type="button"],
+#create_an_account input[type="reset"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#create_an_account button[type="button"]:hover,
+#create_an_account input[type="reset"]:hover {
+    background-color: #0056b3;
+}
+
+.photo{
+    text-align: center;
+    justify-content: center;
+}

@@ -16,35 +16,35 @@
               <ul class="sub-menu children dropdown-menu">
                 <li>
                   <i class="fa fa-table"></i
-                  ><a href="../students/index.php">Basic Table</a>
+                  ><a href="../products/index.php">Basic Table</a>
                 </li>
               </ul>
             </li>
             <li class="menu-item-has-children dropdown">
               <a
-                href="../students/"
+                href="../products/"
                 class="dropdown-toggle"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                <i class="menu-icon fa fa-th"></i>Students</a
+                <i class="menu-icon fa fa-th"></i>products</a
               >
               <ul class="sub-menu children dropdown-menu">
                 <li>
                   <i class="menu-icon fa fa-th"></i
-                  ><a href="../students/">All Students</a>
+                  ><a href="../products/">All products</a>
                 </li>
                 <li>
                   <i class="menu-icon fa fa-th"></i
-                  ><a href="../students/create.php">Add Student</a>
+                  ><a href="../products/create.php">Add Products</a>
                 </li>
               </ul>
             </li>
 
             <li class="menu-item-has-children dropdown">
               <a
-                href="../departments/"
+                href="../Categories/"
                 class="dropdown-toggle"
                 data-toggle="dropdown"
                 aria-haspopup="true"
@@ -55,11 +55,11 @@
               <ul class="sub-menu children dropdown-menu">
                 <li>
                   <i class="menu-icon fa fa-th"></i
-                  ><a href="../departments/">All Departments</a>
+                  ><a href="../Categories/">All Departments</a>
                 </li>
                 <li>
                   <i class="menu-icon fa fa-th"></i
-                  ><a href="../departments/create.php">Add Departments</a>
+                  ><a href="../Categories/create.php">Add Departments</a>
                 </li>
               </ul>
             </li>

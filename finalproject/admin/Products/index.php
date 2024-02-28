@@ -1,3 +1,14 @@
+<?php
+
+require_once '../inc/config.php';
+
+    // Prepare the statement to prevent SQL injection
+    $stmt = $connect->query("SELECT * FROM products");
+    // Fetch the user's details
+    $productDetails = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+?>
+
 <!doctype html>
 <html class="no-js" lang="">
 <head>
@@ -61,25 +72,24 @@
                                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
-                                          <th scope="col">Code</th>
-                                          <th scope="col">Name</th>
-                                          <th scope="col">email</th>
-                                          <th scope="col">Image</th>
+                                          <th scope="col">Product Id</th>
+                                          <th scope="col">Title</th>
+                                          <th scope="col">Description</th>
+                                          <th scope="col">Category</th>
                                           <th scope="col">Department</th>
-                                          <th scope="col">Action</th>
+                                          <th scope="col">Image</th>
 
                                       </tr>
                                   </thead>
                                   <tbody>
-                                    <tr>
-                                          <td>asdasd</td>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-
-                                      </tr>
+                                    <?php foreach($productDetails as $product):?>
+                                        <tr>
+                                            <td><?php echo $product["prod_id"]?></td>
+                                            <td><?php echo $product["title"]?></td>
+                                            <td><?php echo $product["description"]?></td>
+                                            <td><?php echo $product["category"]?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                   </tbody>
                             </table>
                         </div>

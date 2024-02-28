@@ -56,7 +56,7 @@
             <div class="col-lg-12">
               <div class="card">
                 <div class="card-header">
-                  <strong>Students</strong> Elements
+                  <strong>Products</strong> Elements
                 </div>
                 <div class="card-body card-block">
                   <form
@@ -68,25 +68,25 @@
                     <div class="row form-group">
                       <div class="col col-md-3">
                         <label for="text-input" class="form-control-label"
-                          >SSN</label
+                          >Product ID</label
                         >
                       </div>
                       <div class="col-12 col-md-9">
                         <input
-                          type="text"
+                          type="number"
                           id="text-input"
                           name="text-input"
                           placeholder="SSN Here"
                           class="form-control"
                         /><small class="form-text text-muted"
-                          >Enter your SSN</small
+                          >Enter Product ID</small
                         >
                       </div>
                     </div>
                     <div class="row form-group">
                       <div class="col col-md-3">
                         <label for="fName-input" class="form-control-label"
-                          >First Name</label
+                          >Product Name</label
                         >
                       </div>
                       <div class="col-12 col-md-9">
@@ -97,50 +97,33 @@
                           placeholder="Enter Your First Name"
                           class="form-control"
                         /><small class="help-block form-text"
-                          >Please enter your First Name</small
+                          >Please enter Product Name</small
                         >
                       </div>
                     </div>
                     <div class="row form-group">
                       <div class="col col-md-3">
                         <label for="fName-input" class="form-control-label"
-                          >Last Name</label
+                          >Description</label
                         >
                       </div>
                       <div class="col-12 col-md-9">
-                        <input
+                        <textarea
                           type="text"
                           id="lastN-input"
                           name="lName-input"
                           placeholder="Enter Your Last Name"
                           class="form-control"
-                        /><small class="help-block form-text"
+                        ></textarea>
+                        <small class="help-block form-text"
                           >Please enter your last name</small
                         >
                       </div>
                     </div>
                     <div class="row form-group">
                       <div class="col col-md-3">
-                        <label for="email-input" class="form-control-label"
-                          >Email Input</label
-                        >
-                      </div>
-                      <div class="col-12 col-md-9">
-                        <input
-                          type="email"
-                          id="email-input"
-                          name="email-input"
-                          placeholder="Enter Email"
-                          class="form-control"
-                        /><small class="help-block form-text"
-                          >Please enter your email</small
-                        >
-                      </div>
-                    </div>
-                    <div class="row form-group">
-                      <div class="col col-md-3">
                         <label for="file-input" class="form-control-label"
-                          >File input</label
+                          >Product Image</label
                         >
                       </div>
                       <div class="col-12 col-md-9">
@@ -156,7 +139,7 @@
                     <div class="row form-group">
                       <div class="col col-md-3">
                         <label for="select" class="form-control-label"
-                          >Department</label
+                          >Departments</label
                         >
                       </div>
                       <div class="col-12 col-md-9">
@@ -170,33 +153,17 @@
                     </div>
                     <div class="row form-group">
                       <div class="col col-md-3">
-                        <label class="form-control-label">Gender</label>
+                        <label for="select" class="form-control-label"
+                          >Category</label
+                        >
                       </div>
-                      <div class="col col-md-9">
-                        <div class="form-check">
-                          <div class="radio">
-                            <label for="radio2" class="form-check-label">
-                              <input
-                                type="radio"
-                                id="radio2"
-                                name="radios"
-                                value="option2"
-                                class="form-check-input"
-                              />Male
-                            </label>
-                          </div>
-                          <div class="radio">
-                            <label for="radio3" class="form-check-label">
-                              <input
-                                type="radio"
-                                id="radio3"
-                                name="radios"
-                                value="option3"
-                                class="form-check-input"
-                              />Female
-                            </label>
-                          </div>
-                        </div>
+                      <div class="col-12 col-md-9">
+                        <select name="select" id="select" class="form-control">
+                          <option value="0">Please select</option>
+                          <option value="1">Option #1</option>
+                          <option value="2">Option #2</option>
+                          <option value="3">Option #3</option>
+                        </select>
                       </div>
                     </div>
                     <hr>

@@ -6,7 +6,7 @@
                 </div>
             </div>
             <div class="top-right">
-                <div class="header-menu">
+                <div class="header-menu align-items-center">
                     <div class="header-left">
                         <button class="search-trigger"><i class="fa fa-search"></i></button>
                         <div class="form-inline">

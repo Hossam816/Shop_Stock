@@ -1,3 +1,78 @@
+
+<?php
+require_once '../inc/config.php';
+
+    //show all prod department
+    $sqlProds = "SELECT p.*, d.deps_name 
+        FROM products p 
+        INNER JOIN departments d ON p.department_id = d.deps_id";
+    //show all departments
+    $sqlDeps = "SELECT DISTINCT d.deps_id, d.deps_name 
+            FROM departments d";
+    $queryDep = $connect->query($sqlDeps);
+    // Prepare the statement to prevent SQL injection
+
+    //show all category
+    $sqlCat = "SELECT DISTINCT c.cat_id, c.cat_name 
+            FROM category c";
+    $queryCat = $connect->query($sqlCat);
+
+    $stmt = $connect->query($sqlProds);
+
+    
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $errArr = []; // Store all errors
+    $prodId = $_POST['prodId'];
+    $prodTitle = $_POST['prodTitle'];
+    $prodDescription = $_POST['prodDesc'];
+    $prodDepartments = $_POST['prodDeps'];
+    $prodCat = $_POST['prodcat'];
+    $image_name = $_FILES["image"]["name"];
+    $temp = $_FILES['image']['tmp_name'];
+    
+    // Split the image name to get the extension
+    $image_parts = explode('.', $image_name);
+    $ext = end($image_parts); // Get the last element of the array
+    $ext = strtolower($ext);
+    if(in_array($ext, ['jpg', 'png', 'jpeg'])){
+        // Define the directory based on the selected category
+        $directory = '';
+        switch ($prodCat) {
+            case "1111":
+                $directory = "../images/Products/men/";
+                break;
+            case "1112":
+                $directory = "../images/Products/women/";
+                break;
+            case "1113":
+                $directory = "../images/Products/electronics/";
+                break;
+            case "1114":
+                $directory = "../images/Products/jewellry/";
+                break;
+            default:
+                $directory = "../images/Products/bags/";
+                break;
+        }
+        // Move the uploaded file to the appropriate directory
+    } else {
+      $errArr['image'] = "Invalid Image Format. Please upload";
+    }
+    if(empty($errArr)){
+      move_uploaded_file($temp, $directory . $image_name);
+      $inserProduct= "INSERT INTO `products`(`prod_id`, `title`, `description`, `image`, `department_id`, `categ_id` ) VALUES ($prodId,'$prodTitle','$prodDescription','$image_name','$prodDepartments','$prodCat')";
+      $insertRes = $connect->query($inserProduct);
+    }
+}
+
+    // Fetch the user's details
+
+    $productDetails = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $prodDepartments = $queryDep->fetchAll(PDO::FETCH_ASSOC);
+    $categories = $queryCat->fetchAll(PDO::FETCH_ASSOC);
+
+?>
 <!DOCTYPE html>
 <html class="no-js" lang="">
   <head>
@@ -59,15 +134,31 @@
                   <strong>Products</strong> Elements
                 </div>
                 <div class="card-body card-block">
+                  <?php 
+                    if(isset($insertRes)){
+                  ?>
+                    <div class="alert alert-success">
+                      Record Inserted Successfully
+                    </div>
+                  <?php }; ?>
+                  <?php 
+                    if(isset($errArr) && !empty($errArr)) {
+                  ?>
+                    <div class="alert alert-danger">
+                      <?php foreach($errArr as $err){ ?>
+                        <li><?php echo $err?></li>
+                      <?php };?>
+                    </div>
+                  <?php }; ?>
                   <form
-                    action="#"
+                    action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>"
                     method="post"
                     enctype="multipart/form-data"
                     class="form-horizontal"
                   >
                     <div class="row form-group">
                       <div class="col col-md-3">
-                        <label for="text-input" class="form-control-label"
+                        <label for="prodId" class="form-control-label"
                           >Product ID</label
                         >
                       </div>
@@ -75,8 +166,8 @@
                         <input
                           type="number"
                           id="text-input"
-                          name="text-input"
-                          placeholder="SSN Here"
+                          name="prodId"
+                          placeholder="ID Here"
                           class="form-control"
                         /><small class="form-text text-muted"
                           >Enter Product ID</small
@@ -85,7 +176,7 @@
                     </div>
                     <div class="row form-group">
                       <div class="col col-md-3">
-                        <label for="fName-input" class="form-control-label"
+                        <label for="prodTitle" class="form-control-label"
                           >Product Name</label
                         >
                       </div>
@@ -93,8 +184,8 @@
                         <input
                           type="text"
                           id="firstN-input"
-                          name="fName-input"
-                          placeholder="Enter Your First Name"
+                          name="prodTitle"
+                          placeholder="Enter Your Product Name"
                           class="form-control"
                         /><small class="help-block form-text"
                           >Please enter Product Name</small
@@ -103,7 +194,7 @@
                     </div>
                     <div class="row form-group">
                       <div class="col col-md-3">
-                        <label for="fName-input" class="form-control-label"
+                        <label for="prodDesc" class="form-control-label"
                           >Description</label
                         >
                       </div>
@@ -111,8 +202,8 @@
                         <textarea
                           type="text"
                           id="lastN-input"
-                          name="lName-input"
-                          placeholder="Enter Your Last Name"
+                          name="prodDesc"
+                          placeholder="Enter Your Product Name"
                           class="form-control"
                         ></textarea>
                         <small class="help-block form-text"
@@ -122,7 +213,7 @@
                     </div>
                     <div class="row form-group">
                       <div class="col col-md-3">
-                        <label for="file-input" class="form-control-label"
+                        <label for="image" class="form-control-label"
                           >Product Image</label
                         >
                       </div>
@@ -130,7 +221,7 @@
                         <input
                           type="file"
                           id="file-input"
-                          name="file-input"
+                          name="image"
                           class="form-control-file"
                         />
                       </div>
@@ -138,31 +229,31 @@
                     
                     <div class="row form-group">
                       <div class="col col-md-3">
-                        <label for="select" class="form-control-label"
+                        <label for="prodDeps" class="form-control-label"
                           >Departments</label
                         >
                       </div>
                       <div class="col-12 col-md-9">
-                        <select name="select" id="select" class="form-control">
-                          <option value="0">Please select</option>
-                          <option value="1">Option #1</option>
-                          <option value="2">Option #2</option>
-                          <option value="3">Option #3</option>
+                        <select name="prodDeps" id="select" class="form-control">
+                          <option value="0">Please Select  Department</option>
+                          <?php foreach ($prodDepartments as $depart) : ?>
+                            <option value="<?php echo $depart['deps_id']?>"><?php echo $depart['deps_name']?></option>
+                          <?php endforeach;?>
                         </select>
                       </div>
                     </div>
                     <div class="row form-group">
                       <div class="col col-md-3">
-                        <label for="select" class="form-control-label"
+                        <label for="prodcat" class="form-control-label"
                           >Category</label
                         >
                       </div>
                       <div class="col-12 col-md-9">
-                        <select name="select" id="select" class="form-control">
-                          <option value="0">Please select</option>
-                          <option value="1">Option #1</option>
-                          <option value="2">Option #2</option>
-                          <option value="3">Option #3</option>
+                        <select name="prodcat" id="select" class="form-control">
+                          <option value="0">Please Select Category</option>
+                          <?php foreach ($categories as $prodCategory) : ?>
+                            <option value="<?php echo $prodCategory['cat_id']?>"><?php echo $prodCategory['cat_name']?></option>
+                          <?php endforeach;?>
                         </select>
                       </div>
                     </div>

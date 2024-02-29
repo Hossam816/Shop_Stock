@@ -1,12 +1,17 @@
 <?php
-
 require_once '../inc/config.php';
 
-    // Prepare the statement to prevent SQL injection
-    $stmt = $connect->query("SELECT * FROM products");
-    // Fetch the user's details
-    $productDetails = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Show all product departments with category names
+$sqlDeps = "SELECT p.*, d.deps_name, cat.cat_name
+            FROM products p
+            INNER JOIN departments d ON p.department_id = d.deps_id
+            INNER JOIN category cat ON p.categ_id = cat.cat_id";
 
+// Prepare the statement to prevent SQL injection
+$stmt = $connect->query($sqlDeps);
+
+// Fetch the product details
+$productDetails = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!doctype html>
@@ -62,23 +67,22 @@ require_once '../inc/config.php';
         <div class="content">
             <div class="animated fadeIn">
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">All Students</strong>
+                                <strong class="card-title">All Products</strong>
                                 <a href="create.php" class="btn btn-outline-primary btn-md">Add New</a>
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
-                                          <th scope="col">Product Id</th>
-                                          <th scope="col">Title</th>
-                                          <th scope="col">Description</th>
-                                          <th scope="col">Category</th>
-                                          <th scope="col">Department</th>
-                                          <th scope="col">Image</th>
-
+                                            <th scope="col">Product Id</th>
+                                            <th scope="col">Title</th>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">Department</th>
+                                            <th scope="col">Image</th>
+                                            <th scope="col">Active</th>
                                       </tr>
                                   </thead>
                                   <tbody>
@@ -86,8 +90,14 @@ require_once '../inc/config.php';
                                         <tr>
                                             <td><?php echo $product["prod_id"]?></td>
                                             <td><?php echo $product["title"]?></td>
-                                            <td><?php echo $product["description"]?></td>
-                                            <td><?php echo $product["category"]?></td>
+                                            <td><?php echo $product["cat_name"]?></td>
+                                            <td><?php echo $product["deps_name"]?></td>
+                                            <td><?php echo "<img src='../images/Products/" . $product["image"] . "'width='50' hegiht='50' />"; ?></td>
+                                            <td style="height:100%; width:100%; display:flex;flex-direction:row;flex-wrap:wrap; justify-content:space-between;gap: 5px">
+                                                <a href="edit.php?id=<?php echo $product['prod_id']?>" class="btn btn-secondary">Edit</a>
+                                                <a href="show.php?id=<?php echo $product['prod_id']?>" class="btn btn-success">Show</a>
+                                                <a href="delete.php?id=<?php echo $product['prod_id']?>" class="btn btn-danger confirm-del">Delete</a>
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                   </tbody>
@@ -128,6 +138,18 @@ require_once '../inc/config.php';
         $(document).ready(function() {
           $('#bootstrap-data-table-export').DataTable();
       } );
+  </script>
+  <script>
+    $(document).ready(function() {
+        $('#bootstrap-data-table-export').DataTable();
+    });
+
+    $(document).on('click', '.confirm-del', function(e) {
+        var confDele = confirm("Are you Sure to delete this data?");
+        if (!confDele) {
+            e.preventDefault(); // Prevent the default action of the button (e.g., following the link)
+        }
+    });
   </script>
 </body>
 </html>

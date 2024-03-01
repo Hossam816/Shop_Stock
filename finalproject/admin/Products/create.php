@@ -1,6 +1,6 @@
-
 <?php
 require_once '../inc/config.php';
+require_once '../inc/validate.php';
 
     //show all prod department
     $sqlProds = "SELECT p.*, d.deps_name 
@@ -19,8 +19,6 @@ require_once '../inc/config.php';
 
     $stmt = $connect->query($sqlProds);
 
-    
-
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errArr = []; // Store all errors
     $prodId = $_POST['prodId'];
@@ -28,6 +26,7 @@ require_once '../inc/config.php';
     $prodDescription = $_POST['prodDesc'];
     $prodDepartments = $_POST['prodDeps'];
     $prodCat = $_POST['prodcat'];
+    $prodPrice = $_POST['prodPrice'];
     $image_name = $_FILES["image"]["name"];
     $temp = $_FILES['image']['tmp_name'];
     
@@ -43,10 +42,10 @@ require_once '../inc/config.php';
                 $directory = "../images/Products/men/";
                 break;
             case "1112":
-                $directory = "../images/Products/women/";
+                $directory = "../images/Products/Women/";
                 break;
             case "1113":
-                $directory = "../images/Products/electronics/";
+                $directory = "../images/Products/electronic/";
                 break;
             case "1114":
                 $directory = "../images/Products/jewellry/";
@@ -59,9 +58,14 @@ require_once '../inc/config.php';
     } else {
       $errArr['image'] = "Invalid Image Format. Please upload";
     }
+
+    $image_path = $directory . $image_name;
+
+    //duplicateId($prodId);
+
     if(empty($errArr)){
       move_uploaded_file($temp, $directory . $image_name);
-      $inserProduct= "INSERT INTO `products`(`prod_id`, `title`, `description`, `image`, `department_id`, `categ_id` ) VALUES ($prodId,'$prodTitle','$prodDescription','$image_name','$prodDepartments','$prodCat')";
+      $inserProduct= "INSERT INTO `products`(`prod_id`, `title`, `description`,`department_id`,`image`,`categ_id`, `price`) VALUES ($prodId,'$prodTitle','$prodDescription',$prodDepartments,'$image_path' ,$prodCat,$prodPrice);";
       $insertRes = $connect->query($inserProduct);
     }
 }
@@ -255,6 +259,22 @@ require_once '../inc/config.php';
                             <option value="<?php echo $prodCategory['cat_id']?>"><?php echo $prodCategory['cat_name']?></option>
                           <?php endforeach;?>
                         </select>
+                      </div>
+                    </div>
+                    <div class="row form-group">
+                      <div class="col col-md-3">
+                        <label for="prodPrice" class="form-control-label"
+                          >Price</label
+                        >
+                      </div>
+                      <div class="col-12 col-md-9">
+                        <input
+                          type="number"
+                          id="lastN-input"
+                          name="prodPrice"
+                          placeholder="Enter Your Product Name"
+                          class="form-control"
+                        />
                       </div>
                     </div>
                     <hr>

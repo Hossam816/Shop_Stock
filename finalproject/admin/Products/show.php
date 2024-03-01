@@ -92,7 +92,7 @@ if(isset($_GET['id'])){
                                 </tr>
                                 <tr>
                                     <th scope="row">Image</th>
-                                    <td><img src="../images/products/<?php echo $products['image'] ?>"width="200"height="200" alt=""></td>
+                                    <td><img src="<?php echo $products['image'] ?>"width="200"height="200" alt=""></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Category</th>

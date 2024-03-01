@@ -1,6 +1,6 @@
 <div class="top-left">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="./"><img src="../images/logo.png" alt="Logo"></a>
+                <div class="navbar-header height-15">
+                    <a class="navbar-brand" href="./"><img src="../images/ALogo.png" width="50"height="50" alt="Logo"></a>
                     <a class="navbar-brand hidden" href="./"><img src="../images/logo2.png" alt="Logo"></a>
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                 </div>

@@ -80,7 +80,7 @@ $productDetails = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <th scope="col">Product Id</th>
                                             <th scope="col">Title</th>
                                             <th scope="col">Category</th>
-                                            <th scope="col">Department</th>
+                                            <th scope="col">Price</th>
                                             <th scope="col">Image</th>
                                             <th scope="col">Active</th>
                                       </tr>
@@ -91,8 +91,8 @@ $productDetails = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <td><?php echo $product["prod_id"]?></td>
                                             <td><?php echo $product["title"]?></td>
                                             <td><?php echo $product["cat_name"]?></td>
-                                            <td><?php echo $product["deps_name"]?></td>
-                                            <td><?php echo "<img src='../images/Products/" . $product["image"] . "'width='50' hegiht='50' />"; ?></td>
+                                            <td><?php echo $product["price"]?></td>
+                                            <td><?php echo "<img src='" . $product['image'] . "' width='100' height='100' />"; ?></td>
                                             <td style="height:100%; width:100%; display:flex;flex-direction:row;flex-wrap:wrap; justify-content:space-between;gap: 5px">
                                                 <a href="edit.php?id=<?php echo $product['prod_id']?>" class="btn btn-secondary">Edit</a>
                                                 <a href="show.php?id=<?php echo $product['prod_id']?>" class="btn btn-success">Show</a>

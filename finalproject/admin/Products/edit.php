@@ -1,3 +1,42 @@
+<?php
+  if(isset($_GET['id'])){
+    $prodIdCode = $_GET['id'];
+} else {
+    echo "<h1>Error! No product ID provided.</h1>";
+    die();
+}
+
+  require_once "../inc/config.php";
+
+  $editSql = "SELECT p.prod_id, p.title, p.description, p.categ_id, p.department_id, p.price, p.stock
+            FROM products p
+            WHERE p.prod_id = $prodIdCode;";
+  $allProdDepartments = "SELECT DISTINCT d.deps_id, d.deps_name 
+            FROM departments d";
+  $allProdCategories = "SELECT DISTINCT c.cat_id, c.cat_name 
+            FROM category c";
+
+  $depsRes = $connect->query( $allProdDepartments );
+  $catRes = $connect->query( $allProdCategories );
+  $res = $connect->query( $editSql );
+  
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $prodTitle = $_POST['prodTitle'];
+    $prodDescription = $_POST['prodDesc'];
+    $prodDepartments = $_POST['prodDeps'];
+    $prodCat = $_POST['prodcat'];
+    $prodPrice = $_POST['prodPrice'];
+    $prodStock = $_POST['prodStock'];
+    $inserProduct= "UPDATE `products` SET `title`='$prodTitle',`description`='$prodDescription',`department_id`='$prodDepartments',`categ_id`='$prodCat',`price`='$prodPrice',`stock`='$prodStock' WHERE prod_id = $prodIdCode";
+    $insertRes = $connect->query($inserProduct);
+}
+
+  $departments = $depsRes->fetchAll(PDO::FETCH_ASSOC);
+  $categories = $catRes->fetchAll(PDO::FETCH_ASSOC);
+  $products = $res->fetch(PDO::FETCH_ASSOC);
+
+?>
+
 <!DOCTYPE html>
 <html class="no-js" lang="">
   <head>
@@ -59,33 +98,33 @@
                   <strong>Products</strong> Elements
                 </div>
                 <div class="card-body card-block">
+
+                <?php 
+                    if(isset($insertRes)){
+                  ?>
+                    <div class="alert alert-success">
+                      Record Updated Successfully
+                    </div>
+                  <?php }; ?>
+                  <?php 
+                    if(isset($errArr) && !empty($errArr)) {
+                  ?>
+                    <div class="alert alert-danger">
+                      <?php foreach($errArr as $err){ ?>
+                        <li><?php echo $err?></li>
+                      <?php };?>
+                    </div>
+                  <?php }; ?>
+
                   <form
-                    action="#"
+                    action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>"
                     method="post"
                     enctype="multipart/form-data"
                     class="form-horizontal"
                   >
                     <div class="row form-group">
                       <div class="col col-md-3">
-                        <label for="text-input" class="form-control-label"
-                          >Product ID</label
-                        >
-                      </div>
-                      <div class="col-12 col-md-9">
-                        <input
-                          type="number"
-                          id="text-input"
-                          name="text-input"
-                          placeholder="SSN Here"
-                          class="form-control"
-                        /><small class="form-text text-muted"
-                          >Enter Product ID</small
-                        >
-                      </div>
-                    </div>
-                    <div class="row form-group">
-                      <div class="col col-md-3">
-                        <label for="fName-input" class="form-control-label"
+                        <label for="prodTitle" class="form-control-label"
                           >Product Name</label
                         >
                       </div>
@@ -93,9 +132,10 @@
                         <input
                           type="text"
                           id="firstN-input"
-                          name="fName-input"
+                          name="prodTitle"
                           placeholder="Enter Your First Name"
                           class="form-control"
+                          value="<?php echo $products['title'] ?>"
                         /><small class="help-block form-text"
                           >Please enter Product Name</small
                         >
@@ -103,7 +143,7 @@
                     </div>
                     <div class="row form-group">
                       <div class="col col-md-3">
-                        <label for="fName-input" class="form-control-label"
+                        <label for="prodDesc" class="form-control-label"
                           >Description</label
                         >
                       </div>
@@ -111,61 +151,88 @@
                         <textarea
                           type="text"
                           id="lastN-input"
-                          name="lName-input"
+                          name="prodDesc"
                           placeholder="Enter Your Last Name"
                           class="form-control"
-                        ></textarea>
+                        ><?php echo $products['description'] ?></textarea>
                         <small class="help-block form-text"
-                          >Please enter your last name</small
+                          >Please enter Product Description</small
                         >
-                      </div>
-                    </div>
-                    <div class="row form-group">
-                      <div class="col col-md-3">
-                        <label for="file-input" class="form-control-label"
-                          >Product Image</label
-                        >
-                      </div>
-                      <div class="col-12 col-md-9">
-                        <input
-                          type="file"
-                          id="file-input"
-                          name="file-input"
-                          class="form-control-file"
-                        />
                       </div>
                     </div>
                     
                     <div class="row form-group">
                       <div class="col col-md-3">
-                        <label for="select" class="form-control-label"
+                        <label for="deps" class="form-control-label"
                           >Departments</label
                         >
                       </div>
                       <div class="col-12 col-md-9">
-                        <select name="select" id="select" class="form-control">
-                          <option value="0">Please select</option>
-                          <option value="1">Option #1</option>
-                          <option value="2">Option #2</option>
-                          <option value="3">Option #3</option>
+                        <select name="prodDeps" id="select" class="form-control">
+                            <?php foreach ($departments as $depart) : ?>
+                                <?php if ($depart['deps_id'] == $products['department_id']) : ?>
+                                    <option value="<?php echo $depart['deps_id'] ?>" selected><?php echo $depart['deps_name'] ?></option>
+                                <?php else : ?>
+                                    <option value="<?php echo $depart['deps_id'] ?>"><?php echo $depart['deps_name'] ?></option>
+                                <?php endif; ?>
+                            <?php endforeach;?>
                         </select>
                       </div>
                     </div>
                     <div class="row form-group">
                       <div class="col col-md-3">
-                        <label for="select" class="form-control-label"
+                        <label for="prodCat" class="form-control-label"
                           >Category</label
                         >
                       </div>
                       <div class="col-12 col-md-9">
-                        <select name="select" id="select" class="form-control">
-                          <option value="0">Please select</option>
-                          <option value="1">Option #1</option>
-                          <option value="2">Option #2</option>
-                          <option value="3">Option #3</option>
+                        <select name="prodcat" id="select" class="form-control">
+                            <?php foreach ($categories as $prodCategory) : ?>
+                                <?php if ($prodCategory['cat_id'] == $products['categ_id']) : ?>
+                                    <option value="<?php echo $prodCategory['cat_id'] ?>" selected><?php echo $prodCategory['cat_name'] ?></option>
+                                <?php else : ?>
+                                    <option value="<?php echo $prodCategory['cat_id'] ?>"><?php echo $prodCategory['cat_name'] ?></option>
+                                <?php endif; ?>
+                            <?php endforeach;?>
                         </select>
                       </div>
                     </div>
+                    <div class="row form-group">
+                      <div class="col col-md-3">
+                        <label for="prodPrice" class="form-control-label"
+                          >Price</label
+                        >
+                      </div>
+                      <div class="col-12 col-md-9">
+                        <input
+                          type="number"
+                          id="lastN-input"
+                          name="prodPrice"
+                          placeholder="Enter Your Product Name"
+                          class="form-control"
+                          value="<?php echo $products['price'];?>"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="row form-group">
+                      <div class="col col-md-3">
+                        <label for="prodStock" class="form-control-label"
+                          >Stock</label
+                        >
+                      </div>
+                      <div class="col-12 col-md-9">
+                        <input
+                          type="number"
+                          id="lastN-input"
+                          name="prodStock"
+                          placeholder="Enter Your Product Name"
+                          class="form-control"
+                          value="<?php echo $products['stock'];?>"
+                        />
+                      </div>
+                    </div>
+
                     <hr>
                     <div class="row form-group">
                       <button type="submit" class="btn btn-success btn-sm">
@@ -174,55 +241,6 @@
                     </div>
                     
                   </form>
-                </div>
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-sm">
-                    <i class="fa fa-dot-circle-o"></i> Submit
-                  </button>
-                  <button type="reset" class="btn btn-danger btn-sm">
-                    <i class="fa fa-ban"></i> Reset
-                  </button>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header"><strong>Inline</strong> Form</div>
-                <div class="card-body card-block">
-                  <form action="#" method="post" class="form-inline">
-                    <div class="form-group">
-                      <label
-                        for="exampleInputName2"
-                        class="pr-1 form-control-label"
-                        >Name</label
-                      ><input
-                        type="text"
-                        id="exampleInputName2"
-                        placeholder="Jane Doe"
-                        required=""
-                        class="form-control"
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label
-                        for="exampleInputEmail2"
-                        class="px-1 form-control-label"
-                        >Email</label
-                      ><input
-                        type="email"
-                        id="exampleInputEmail2"
-                        placeholder="jane.doe@example.com"
-                        required=""
-                        class="form-control"
-                      />
-                    </div>
-                  </form>
-                </div>
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-sm">
-                    <i class="fa fa-dot-circle-o"></i> Submit
-                  </button>
-                  <button type="reset" class="btn btn-danger btn-sm">
-                    <i class="fa fa-ban"></i> Reset
-                  </button>
                 </div>
               </div>
             </div>

@@ -1,3 +1,11 @@
+<?php
+require_once 'config.php';
+$id=$_SESSION['userid'];
+$query = "SELECT * from users where id=$id";
+$res = $connect->query($query);
+$user = $res->fetch(PDO::FETCH_ASSOC);
+?>
+
 <div class="top-left">
                 <div class="navbar-header height-15">
                     <a class="navbar-brand" href="./"><img src="../images/ALogo.png" width="50"height="50" alt="Logo"></a>
@@ -87,13 +95,14 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa-user"></i>My Profile</a>
+
+                            <a class="nav-link" href="#"><i class="fa fa-user"></i><?php echo $user['user_name'] ?> </a>
 
                             <a class="nav-link" href="#"><i class="fa fa-bell-o"></i>Notifications <span class="count">13</span></a>
 
                             <a class="nav-link" href="#"><i class="fa fa-cog"></i>Settings</a>
 
-                            <a class="nav-link" href="#"><i class="fa fa-power-off"></i>Logout</a>
+                            <a class="nav-link" href="logout.php"><i class="fa fa-power-off"></i>Logout</a>
                         </div>
                     </div>
                 </div>

@@ -2,24 +2,6 @@
         <div id="main-menu" class="main-menu collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="menu-title">UI elements</li>
-            <!-- /.menu-title -->
-            <li class="menu-item-has-children dropdown">
-              <a
-                href="#"
-                class="dropdown-toggle"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <i class="menu-icon fa fa-table"></i>Tables</a
-              >
-              <ul class="sub-menu children dropdown-menu">
-                <li>
-                  <i class="fa fa-table"></i
-                  ><a href="../products/index.php">Basic Table</a>
-                </li>
-              </ul>
-            </li>
             <li class="menu-item-has-children dropdown">
               <a
                 href="../products/"

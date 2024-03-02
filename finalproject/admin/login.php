@@ -1,8 +1,24 @@
+<?php
+    include 'inc/config.php';
+    if($_SERVER['REQUEST_METHOD']=='POST'){
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+    
+    $userQuery = "select * from users where user_email='$email' and password='$password'";
+    $exQuery = $connect->query($userQuery);
+    $users = $exQuery->fetch(PDO::FETCH_ASSOC);
+    if($exQuery->rowCount() > 0){
+        session_start();
+        $_SESSION['userid'] = $users['id'];
+        header("Location: index.php");
+    }else{
+        echo "invalid email or password";
+    }
+}
+?>  
+
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<html class="no-js" lang=""> 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,14 +60,17 @@
                     </a>
                 </div>
                 <div class="login-form login_container">
-                    <form>
+                    <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>"
+                        method="post"
+                        enctype="multipart/form-data"
+                        class="form-horizontal">
                         <div class="form-group">
-                            <label>Email address</label>
-                            <input type="email" class="form-control" placeholder="Email">
+                            <label for="email">Email address</label>
+                            <input type="email" name="email" class="form-control" placeholder="Email">
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" class="form-control" placeholder="Password">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" class="form-control" placeholder="Password">
                         </div>
                         <div class="checkbox">
                             <label>

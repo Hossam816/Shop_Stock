@@ -1,4 +1,7 @@
 <?php
+    session_start();
+?>
+<?php
 require_once '../inc/config.php';
 
 // Show all product departments with category names

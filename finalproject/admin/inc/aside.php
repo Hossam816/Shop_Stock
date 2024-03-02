@@ -45,26 +45,23 @@
                 </li>
               </ul>
             </li>
-
-            <li class="menu-title">Extras</li>
-            <!-- /.menu-title -->
             <li class="menu-item-has-children dropdown">
               <a
-                href="#"
+                href="../Categories/"
                 class="dropdown-toggle"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                <i class="menu-icon fa fa-glass"></i>Pages</a
+                <i class="menu-icon fa fa-th"></i>Orders</a
               >
               <ul class="sub-menu children dropdown-menu">
                 <li>
-                  <i class="menu-icon fa fa-sign-in"></i
-                  ><a href="../page-login.php">Login</a>
+                  <i class="menu-icon fa fa-th"></i
+                  ><a href="../orders/">All Orders</a>
                 </li>
-    
-                </li>
+              </ul>
+            </li>
               </ul>
             </li>
           </ul>

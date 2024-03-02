@@ -3,7 +3,7 @@
     if($_SERVER['REQUEST_METHOD']=='POST'){
         $email = $_POST['email'];
         $password = $_POST['password'];
-    
+
     $userQuery = "select * from users where user_email='$email' and password='$password'";
     $exQuery = $connect->query($userQuery);
     $users = $exQuery->fetch(PDO::FETCH_ASSOC);

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="style/stylee.css">
+</head>
+<body>
+    <header>
+        <h1 id="categoryTitle">Products</h1>
+        <a href="shop.html">Back to Categories</a>
+    </header>
+    <div id="products"></div>
+<script>
+   document.addEventListener("DOMContentLoaded", function() {
+    const params = new URLSearchParams(window.location.search)
+    const category = params.get('category')
+    const categoryTitleElement = document.getElementById("categoryTitle")
+    categoryTitleElement.textContent = `${category} Products`
+
+    const productsElement = document.getElementById("products")
+
+    fetch(`https://fakestoreapi.com/products/category/${category}`)
+        .then(response => response.json())
+        .then(products => {
+            products.forEach(product => {
+                const productDiv = document.createElement("div")
+                productDiv.classList.add("product")
+
+                const title = document.createElement("h2")
+                title.textContent = product.title
+                productDiv.appendChild(title)
+
+                const description = document.createElement("p")
+                description.textContent = product.description
+                productDiv.appendChild(description)
+
+                const price = document.createElement("p")
+                price.textContent = `Price: $${product.price}`
+                productDiv.appendChild(price)
+
+                const image = document.createElement("img")
+                image.src = product.image
+                image.alt = product.title
+                productDiv.appendChild(image)
+
+                const rating = document.createElement("p")
+                rating.textContent = `Rating: ${product.rating.rate} (${product.rating.count} reviews)`
+                productDiv.appendChild(rating)
+
+                const addButton = document.createElement("button")
+                addButton.textContent = "Add to Cart"
+                addButton.addEventListener("click", function() {
+                    addToCart(product)
+                })
+                productDiv.appendChild(addButton)
+
+                productsElement.appendChild(productDiv)
+            })
+        })
+        .catch(error => console.error('Error fetching products:', error))
+        function addToCart(product) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || []
+    let existingProductIndex = cart.findIndex(item => item.id === product.id)
+    if (existingProductIndex !== -1) {
+        cart[existingProductIndex].quantity++
+    } else {
+        product.quantity = 1
+        cart.push(product)
+    }
+    localStorage.setItem('cart', JSON.stringify(cart))
+    window.location.href = "cart.html"
+}
+
+
+
+})
+
+
+</script>
+</body>
+</html>
